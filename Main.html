@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Wizards</title>
+    <script src="https://unpkg.com/lucide"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            background-image: url('https://images.unsplash.com/photo-1472289065668-ce650ac443d2?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background: #2c3e50;
+            padding: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .navbar.active {
+            transform: translateX(0);
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            cursor: pointer;
+            background: #2c3e50;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: #34495e;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #3498db;
+        }
+
+        .nav-button i {
+            margin-bottom: 8px;
+        }
+
+        .nav-home {
+            background: #2ecc71;
+            margin-bottom: 30px;
+        }
+
+        .nav-home:hover {
+            background: #27ae60;
+        }
+
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .quote-container {
+            margin: 40px auto;
+            max-width: 800px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #2c3e50;
+            font-size: 1.2em;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 2em;
+            color: #3498db;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .content-card h3 {
+            color: #2c3e50;
+            margin: 10px 0;
+            font-size: 1.4em;
+        }
+
+        .content-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .content-card i {
+            font-size: 2em;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            max-width: 800px;
+            border-radius: 15px;
+            position: relative;
+            animation: modalFade 0.3s ease-in-out;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #2c3e50;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .close-modal:hover {
+            background-color: #f0f2f5;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .modal-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .modal-list li {
+            margin: 10px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            transition: transform 0.2s ease;
+        }
+
+        .modal-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .page-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .interpersonal-section {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .interpersonal-section img {
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .interpersonal-section p {
+            max-width: 800px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        .grade-image {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .interpersonal-section img {
+                max-width: 100%;
+            }
+        }
+
+        .skill-content {
+            margin-top: 15px;
+        }
+
+
+
+        .skill-list li {
+            margin: 8px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .skill-list li:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+<button class="hamburger" onclick="toggleNav()">
+    <i data-lucide="menu"></i>
+</button>
+
+<nav class="navbar">
+    <button class="nav-button nav-home" onclick="showPage('home')">
+        <i data-lucide="home"></i>
+        <span>Home</span>
+    </button>
+    <button class="nav-button" onclick="showPage('prek')">
+        <i data-lucide="rocket"></i>
+        <span>PreK and K</span>
+    </button>
+    <button class="nav-button" onclick="showPage('elementary')">
+        <i data-lucide="school"></i>
+        <span>Elementary</span>
+    </button>
+    <button class="nav-button" onclick="showPage('middle')">
+        <i data-lucide="book-open"></i>
+        <span>Middle School</span>
+    </button>
+    <button class="nav-button" onclick="showPage('high')">
+        <i data-lucide="graduation-cap"></i>
+        <span>High School</span>
+    </button>
+    <button class="nav-button" onclick="showPage('college')">
+        <i data-lucide="laptop"></i>
+        <span>College</span>
+    </button>
+</nav>
+
+<main class="main-content">
+    <div id="home" class="page-content active">
+        <div class="header">
+            <h1>Work Wizards</h1>
+            <div class="quote-container">
+                <p class="quote">The single biggest problem in communication is the illusion that it has taken place. - George Bernard Shaw</p>
+            </div>
+        </div>
+
+        <div class="interpersonal-section">
+            <h2>Understanding Interpersonal Communication</h2>
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Communication illustration">
+            <p>Interpersonal communication is the process of exchanging information, feelings, and meaning between two or more people through verbal and non-verbal messages.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <i data-lucide="message-circle"></i>
+                <h3>Active Listening Skills</h3>
+                <p>Learn the art of effective listening and understanding.</p>
+                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f" alt="Active Listening">
+            </div>
+            <div class="content-card">
+                <i data-lucide="users"></i>
+                <h3>Building Relationships</h3>
+                <p>Discover strategies for creating meaningful connections.</p>
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac" alt="Building Relationships">
+            </div>
+            <div class="content-card">
+                <i data-lucide="heart-handshake"></i>
+                <h3>Emotional Intelligence</h3>
+                <p>Develop awareness of emotions in communication.</p>
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e" alt="Emotional Intelligence">
+            </div>
+            <div class="content-card">
+                <i data-lucide="hand"></i>
+                <h3>Body Language</h3>
+                <p>Understanding non-verbal communication cues.</p>
+                <img src="https://images.unsplash.com/photo-1553484771-371a605b060b" alt="Body Language">
+            </div>
+            <div class="content-card">
+                <i data-lucide="puzzle"></i>
+                <h3>Problem Solving</h3>
+                <p>Collaborative approaches to resolving conflicts.</p>
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4" alt="Problem Solving">
+            </div>
+        </div>
+    </div>
+
+    <div id="prek" class="page-content">
+        <h2>PreK and Kindergarten Communication Skills</h2>
+        <img class="grade-image" src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9" alt="PreK children learning">
+        <div class="content-grid">
+            <div class="content-card">
+                <i data-lucide="users"></i>
+                <h3>Taking Turns</h3>
+                <p>Learning to wait and share during conversations and play.</p>
+                <div class="skill-content">
+                    <img src="https://plus.unsplash.com/premium_photo-1681842286315-16251849e9d5" alt="Children taking turns">
+                </div>
+            </div>
+            <div class="content-card">
+                <i data-lucide="heart"></i>
+                <h3>Using Kind Words</h3>
+                <p>Practice saying "please," "thank you," and "excuse me."</p>
+                <img src="https://images.unsplash.com/photo-1484820540004-14229fe36ca4" alt="Kind Words">
+            </div>
+            <div class="content-card">
+                <i data-lucide="smile"></i>
+                <h3>Expressing Feelings</h3>
+                <p>Learning to name and share emotions appropriately.</p>
+                <img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4" alt="Expressing Feelings">
+            </div>
+            <div class="content-card">
+                <i data-lucide="ear"></i>
+                <h3>Listening Skills</h3>
+                <p>Developing active listening habits.</p>
+                <img src="https://images.unsplash.com/photo-1543165796-5426273eaab3" alt="Listening Skills">
+            </div>
+            <div class="content-card">
+                <i data-lucide="users-2"></i>
+                <h3>Making Friends</h3>
+                <p>Building social connections with peers.</p>
+                <img src="https://plus.unsplash.com/premium_photo-1661700118900-0ba2da2a95c9" alt="Making Friends">
+            </div>
+        </div>
+    </div>
+
+    <div id="elementary" class="page-content">
+        <h2>Elementary School Communication Skills</h2>
+        <img class="grade-image" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b" alt="Elementary activities">
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Friendship Building</h3>
+                <p>Learning to make and maintain friendships.</p>
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18" alt="Friendship">
+            </div>
+            <div class="content-card">
+                <h3>Group Work</h3>
+                <p>Developing teamwork and collaboration skills.</p>
+                <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb" alt="Group Work">
+            </div>
+            <div class="content-card">
+                <h3>Problem Solving</h3>
+                <p>Learning to resolve conflicts peacefully.</p>
+                <img src="https://images.unsplash.com/photo-1516534775068-ba3e7458af70" alt="Problem Solving">
+            </div>
+        </div>
+    </div>
+
+    <div id="middle" class="page-content">
+        <h2>Middle School Communication Skills</h2>
+        <img class="grade-image" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.kgj80zpb-nv6hzESBpGgGgHaDK%26pid%3DApi&f=1&ipt=911ebd9093bcecaafd5ce151db35682f6a568c0f80ff1c02e4485cb660ac3cf8&ipo=images" alt="Middle school activities">
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Digital Communication</h3>
+                <p>Understanding appropriate online interaction.</p>
+                <img src="https://images.unsplash.com/photo-1516321165247-4aa89a48be28" alt="Digital Communication">
+            </div>
+            <div class="content-card">
+                <h3>Peer Relationships</h3>
+                <p>Navigating complex social situations.</p>
+                <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70" alt="Peer Relationships">
+            </div>
+            <div class="content-card">
+                <h3>Self-Expression</h3>
+                <p>Developing confidence in communication.</p>
+                <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846" alt="Self Expression">
+            </div>
+            <div class="content-card">
+                <h3>Stereotypes</h3>
+                <p>After elementary school, middle school serves as a transitional period and a springboard to high school. Although it is a fascinating and entertaining place, it is not for the faint of heart; It is an adjustment for kids. Communication can be challenging, and the behavior of middle school students may vary, sometimes being humorous or difficult to navigate. Sometimes requiring constant communication, facing misunderstanding, and navigating intelligent emotion in dealing with them. Teachers must maintain motivation and adaptability to effectively manage the classroom environment and support students through this phase of growth. .</p>
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.explicit.bing.net%2Fth%3Fid%3DOIP.MdeZOBMfeHu5idlTlcblogHaDM%26pid%3DApi&f=1&ipt=1d62942b24a99ef9e18b0c343664137caf6fb058f7a86b470a85f3c1573e6eee&ipo=images" alt="Self Expression">
+            </div>
+            <div class="content-card">
+                <h3>The IPC Needs</h3>
+                <p>Cultural aspects of interpersonal communication (IPC) significantly impact middle school students’ experiences, affecting how they interact with teachers and peers. When we consider IPC needs such as affection, inclusion, and control, cultural differences can either facilitate or hinder effective communication, which in turn affects a student's emotional development, academic performance, and overall well-being.</p>
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.5J_BucR3zsZlB1x7iFZ0LAAAAA%26pid%3DApi&f=1&ipt=bd3e958b79d2a46acda56e9f27d7b309ae353baca87affee63950bb375ce17a6&ipo=images" alt="Self Expression">
+            </div>
+            <div class="content-card">
+                <h3>Social Exchange Theory Between Teacher and Student</h3>
+                <p>Cultural differences shape what students view as rewarding (e.g., praise vs. personalized attention). Misalignments between teacher and student expectations can impact motivation and engagement.</p>
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.F1B5heZ43H3iyptvcgq26AHaE7%26pid%3DApi&f=1&ipt=135c5c228e7cc88439d29b8807aa11c51032b7f4328cae52c59b7d53a42b1102&ipo=images" alt="Self Expression">
+            </div>
+            <div class="content-card">
+                <h3>Effective Communicator</h3>
+                <p>Effective communication is crucial for teachers to foster an inclusive and supportive learning environment. Teachers who understand cultural differences are better equipped to create a classroom environment where all students feel valued and understood.</p>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgF81XfLmcppkEh19hEbofYDzNmfhSL2poXb-SkyEJLM6glgzYjppo6Ljhb9xcbz47LhAifSQpA7tF0FMGaOJep23PQ_0xJH1fvT7eV6P_sSrtL_xiPawtS6iwZQ3BbYwaqK5K49ZdopldmdFTC1G3BcCaataCsuoFPukRQ89xBBcZFjRQZE23CKDnjIg/w1200-h630-p-k-no-nu/1528362554931.png" alt="Self Expression">
+            </div>
+            <div class="content-card">
+                <h3>The Dark Side of Emotions</h3>
+                <p>The dark side of emotions refers to the more negative or challenging emotions that can arise in interpersonal communication, such as anger, jealousy, fear, or sadness. These emotions can be intensified or expressed differently across cultures.</p>
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.w79JXt4Zn6PKU_EOOaXdEwHaD2%26pid%3DApi&f=1&ipt=c350a8dc158511ef7f8c203178fa7bf3751ed58e5bf133572f47c753f6005ae7&ipo=images" alt="Self Expression">
+            </div>
+            <div class="content-card">
+                <h3>Roles in Interpersonal Communication</h3>
+                <p>In middle school, students are navigating complex roles that are influenced by their cultural backgrounds.</p>
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thoughtco.com%2Fthmb%2Fv5w7Ja1uz6WchWgbKjR_2P_wsek%3D%2F1500x0%2Ffilters%3Ano_upscale()%3Amax_bytes(150000)%3Astrip_icc()%2FJapaneseHighSchool-58c6b01b3df78c353c640258.jpg&f=1&nofb=1&ipt=60e1def8a4badd435941e5ffee3d0ec80689d6794e892bab979f0190d6ec5a21&ipo=images" alt="Self Expression">
+            </div>
+        </div>
+    </div>
+
+    <div id="high" class="page-content">
+        <h2>High School Communication Skills</h2>
+        <img class="grade-image" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644" alt="High school activities">
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Public Speaking</h3>
+                <p>Developing presentation and speech skills.</p>
+                <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2" alt="Public Speaking">
+            </div>
+            <div class="content-card">
+                <h3>Professional Communication</h3>
+                <p>Learning workplace communication skills.</p>
+                <img src="https://images.unsplash.com/photo-1560439514-4e9645039924" alt="Professional Communication">
+            </div>
+            <div class="content-card">
+                <h3>Leadership</h3>
+                <p>Building team management abilities.</p>
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Leadership">
+            </div>
+        </div>
+    </div>
+
+    <div id="college" class="page-content">
+        <h2>College Communication Skills</h2>
+        <img class="grade-image" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f" alt="College activities">
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Academic Discourse</h3>
+                <p>Engaging in scholarly conversations and debates.</p>
+                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94" alt="Academic Discourse">
+            </div>
+            <div class="content-card">
+                <h3>Networking</h3>
+                <p>Building professional relationships and connections.</p>
+                <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b302a" alt="Networking">
+            </div>
+            <div class="content-card">
+                <h3>Career Communication</h3>
+                <p>Mastering interview and workplace skills.</p>
+                <img src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca" alt="Career Communication">
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="modal" id="cardModal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">×</button>
+        <img class="modal-image" src="" alt="">
+        <h2 class="modal-title"></h2>
+        <p class="modal-description"></p>
+        <ul class="modal-list"></ul>
+    </div>
+</div>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Navigation functions
+    function toggleNav() {
+        document.querySelector('.navbar').classList.toggle('active');
+    }
+
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page-content').forEach(page => {
+            page.classList.remove('active');
+        });
+
+        // Show selected page
+        document.getElementById(pageId).classList.add('active');
+
+        // Close navigation on mobile
+        document.querySelector('.navbar').classList.remove('active');
+
+        // Scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Modal functions
+    function openModal(card) {
+        const modal = document.getElementById('cardModal');
+        const modalImage = modal.querySelector('.modal-image');
+        const modalTitle = modal.querySelector('.modal-title');
+        const modalDescription = modal.querySelector('.modal-description');
+        const modalList = modal.querySelector('.modal-list');
+
+        modalImage.src = card.querySelector('img').src;
+        modalTitle.textContent = card.querySelector('h3').textContent;
+        modalDescription.textContent = card.querySelector('p').textContent;
+
+        // Clear existing list items
+        modalList.innerHTML = '';
+
+        // Add detailed content based on the card type
+        const cardTitle = card.querySelector('h3').textContent;
+        const details = getCardDetails(cardTitle);
+
+        details.forEach(detail => {
+            const li = document.createElement('li');
+            li.textContent = detail;
+            modalList.appendChild(li);
+        });
+
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('cardModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+
+    function getCardDetails(cardTitle) {
+        const detailsMap = {
+            'Active Listening Skills': [
+                'Maintain eye contact and give verbal/non-verbal feedback',
+                'Focus completely on the speaker without planning your response',
+                'Ask clarifying questions to ensure understanding',
+                'Reflect back what you heard to confirm comprehension',
+                'Practice patience and avoid interrupting'
+            ],
+            'Building Relationships': [
+                'Show genuine interest in others\' perspectives',
+                'Practice empathy and emotional awareness',
+                'Share appropriate personal experiences',
+                'Maintain consistent and meaningful communication',
+                'Respect boundaries and personal space'
+            ],
+            'Emotional Intelligence': [
+                'Recognize and name different emotions',
+                'Understand triggers and emotional responses',
+                'Develop strategies for emotional regulation',
+                'Practice empathy and perspective-taking',
+                'Build resilience and adaptive coping skills'
+            ],
+            'Body Language': [
+                'Maintain appropriate posture and stance',
+                'Use facial expressions effectively',
+                'Practice purposeful gesturing',
+                'Understand cultural differences in non-verbal communication',
+                'Match body language to verbal message'
+            ],
+            'Problem Solving': [
+                'Identify the core issue or conflict',
+                'Generate multiple possible solutions',
+                'Evaluate options collaboratively',
+                'Implement agreed-upon solutions',
+                'Monitor and adjust approaches as needed'
+            ],
+            'Taking Turns': [
+                'Wait patiently for your turn to speak',
+                'Use visual cues or objects to indicate speaking turns',
+                'Practice active listening while others are speaking',
+                'Show respect for others\' time to share',
+                'Learn to recognize appropriate moments to contribute'
+            ],
+            'Using Kind Words': [
+                'Learn and use polite greetings and farewells',
+                'Practice gratitude and appreciation',
+                'Use "please" and "thank you" consistently',
+                'Learn to apologize sincerely',
+                'Choose words that build others up'
+            ],
+            'Expressing Feelings': [
+                'Identify and name different emotions',
+                'Use "I feel" statements appropriately',
+                'Learn healthy ways to express strong emotions',
+                'Recognize others\' emotional expressions',
+                'Practice emotional regulation strategies'
+            ],
+            'Listening Skills': [
+                'Focus attention on the speaker',
+                'Show understanding through non-verbal cues',
+                'Follow simple and complex directions',
+                'Ask relevant questions',
+                'Remember and recall key information'
+            ],
+            'Making Friends': [
+                'Introduce yourself to new people',
+                'Share and take turns with others',
+                'Show interest in others\' activities',
+                'Use kind words and actions',
+                'Learn to resolve conflicts peacefully'
+            ],
+            'The IPC Needs': [
+                'Affection: Cultures differ in how affection is expressed. In some, physical or verbal displays are common, while in others, emotional restraint is preferred. Teachers need to be aware of these differences to avoid making students uncomfortable with well-intended gestures.\n',
+                'Inclusion: Cultural norms influence how students approach group dynamics. Some cultures value collective belonging, while others emphasize individualism. A teacher’s failure to recognize these differences can lead to unintended exclusion or misinterpretation of students’ behavior.\n',
+                'Control: Authority and power dynamics vary. In hierarchical cultures, students may expect clear, authoritative guidance, whereas in more egalitarian cultures, they may seek collaboration. Misunderstanding these expectations can affect how students respond to discipline and instruction',
+            ],
+            'Roles in Interpersonal Communication': [
+                'Students may be navigating the roles of learner, friend, and family member, each with distinct expectations regarding communication. A student from a collectivist culture might place a higher value on the role of being a good group member or family representative, while one from an individualistic culture may focus more on personal achievement and self-expression',
+                'Teachers also embody multiple roles, such as educator, authority figure, mentor, and sometimes, counselor. Teachers\' cultural backgrounds and their understanding of students\' cultures shape their expectations and teaching methods. Effective communication requires that teachers recognize and respect the diverse roles students may be assuming and adjust their strategies accordingly.',
+                'Peers serve a critical role in students\' social development. Cultural differences in peer relationships—such as how friendship is defined, what is considered supportive behavior, and how conflict is managed—can significantly affect how students communicate within their peer groups.',
+            ],
+            'Social Exchange Theory Between Teacher and Student': [
+                'Maintain eye contact and give verbal/non-verbal feedback',
+                'Focus completely on the speaker without planning your response',
+                'Ask clarifying questions to ensure understanding',
+                'Reflect back what you heard to confirm comprehension',
+                'Practice patience and avoid interrupting'
+            ],
+            'Effective Communicator': [
+                'Cultural Sensitivity: Teachers who are culturally aware can adjust their communication style to meet the diverse needs of their students. This may involve varying their approach to discipline, adjusting the level of formality, or changing how they offer praise or feedback to ensure it resonates with students from different cultural backgrounds.\n',
+                'Building Trust: A teacher who is an effective communicator and understands the cultural nuances of their students can build trust, which is essential for encouraging student engagement and academic success. When students feel their cultural identity is respected, they are more likely to participate actively in class and form positive relationships with their peers and the teacher.\n',
+                'Conflict Resolution: Cultural differences can sometimes lead to misunderstandings or conflicts in the classroom. An effective communicator will recognize when cultural differences are at play and will work to mediate conflicts in ways that respect all parties\' cultural perspectives.',
+            ],
+            'The Dark Side of Emotions': [
+                'Anger: In some cultures, expressing anger openly is discouraged, while in others, it might be more acceptable. For a middle school student, cultural differences in the expression of anger can affect how conflicts are resolved. A student from a culture where open conflict is avoided might suppress feelings of anger, leading to internalized stress or passive-aggressive behavior. Conversely, a student from a culture that values direct confrontation might express anger more openly, potentially causing friction with peers or teachers who are not accustomed to this form of emotional expression.\n',
+                'Fear and Anxiety: Cultural differences in how fear or anxiety is managed can influence student behavior in the classroom. For example, in cultures where academic success is heavily valued, students may experience high levels of anxiety. A teacher unfamiliar with the cultural pressures a student faces may misinterpret anxiety as lack of effort or engagement, rather than a response to external stressors.',
+                'Sadness and Shame: In some cultures, emotions like sadness or shame may be internalized, whereas others might be more open about expressing vulnerability. A teacher might misread a student\'s quiet demeanor as disinterest or lack of motivation when, in fact, the student may be feeling sadness or shame about their performance or social status.',
+            ],
+            'Stereotypes': [
+                'https://www.weareteachers.com/wp-content/uploads/middle-school-partners-memes-800x800.png',
+                'https://www.weareteachers.com/wp-content/uploads/student-speaks-up-meme-800x699.png',
+                'https://www.weareteachers.com/wp-content/uploads/middle-school-directions-memes-800x800.png'
+            ],
+        };
+
+        return detailsMap[cardTitle] || [
+            'Content coming soon...',
+            'Check back for updates',
+            'Contact us for more information'
+        ];
+    }
+
+    // Add click listeners to all content cards
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.content-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => openModal(card));
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('cardModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    });
+
+    // Close nav when clicking outside
+    document.addEventListener('click', function(event) {
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('.hamburger');
+
+        if (!navbar.contains(event.target) && !hamburger.contains(event.target) && navbar.classList.contains('active')) {
+            navbar.classList.remove('active');
+        }
+    });
+</script>
+</body>
+</html>
