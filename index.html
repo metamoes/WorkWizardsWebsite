@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Wizards - Redirecting...</title>
+    <script>
+        // Redirect to main.html
+        window.location.href = 'main.html';
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #2c3e50;
+        }
+        .redirect-message {
+            text-align: center;
+            padding: 20px;
+        }
+        .loading {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0,0,0,.1);
+            border-radius: 50%;
+            border-top-color: #2c3e50;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="redirect-message">
+    <h1>Welcome to Work Wizards</h1>
+    <div class="loading"></div>
+    <p>Redirecting to main page...</p>
+    <noscript>
+        <p>If you are not redirected automatically, please <a href="main.html">click here</a>.</p>
+    </noscript>
+</div>
+</body>
+</html>
