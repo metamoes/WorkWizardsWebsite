@@ -1,0 +1,378 @@
+function getCardDetails(cardTitle) {
+        const detailsMap = {
+
+
+            'Active Listening Skills': [
+                'Key points and concepts: Active attention, Nonverbal feedback, Comprehension, Patience, Clarification',
+                'Maintain eye contact and give verbal/non-verbal feedback',
+                'Focus completely on the speaker without planning your response',
+                'Ask clarifying questions to ensure understanding',
+                'Reflect back what you heard to confirm comprehension',
+                'Practice patience and avoid interrupting'
+            ],
+            'Building Relationships': [
+                'Key points and concepts: Empathy, Authenticity, Boundaries, Communication consistency, Emotional awareness',
+                'Show genuine interest in others\' perspectives',
+                'Practice empathy and emotional awareness',
+                'Share appropriate personal experiences',
+                'Maintain consistent and meaningful communication',
+                'Respect boundaries and personal space'
+            ],
+            'Emotional Intelligence': [
+                'Key points and concepts: Self-awareness, Emotional regulation, Empathy, Resilience, Adaptive coping',
+                'Recognize and name different emotions',
+                'Understand triggers and emotional responses',
+                'Develop strategies for emotional regulation',
+                'Practice empathy and perspective-taking',
+                'Build resilience and adaptive coping skills'
+            ],
+            'Body Language': [
+                'Key points and concepts: Posture, Facial expressions, Gestures, Cultural awareness, Nonverbal alignment',
+                'Maintain appropriate posture and stance',
+                'Use facial expressions effectively',
+                'Practice purposeful gesturing',
+                'Understand cultural differences in non-verbal communication',
+                'Match body language to verbal message'
+            ],
+            'Problem Solving': [
+                'Key points and concepts: Issue identification, Solution generation, Collaboration, Implementation, Adaptation',
+                'Identify the core issue or conflict',
+                'Generate multiple possible solutions',
+                'Evaluate options collaboratively',
+                'Implement agreed-upon solutions',
+                'Monitor and adjust approaches as needed'
+            ],
+            'Taking Turns': [
+                'Key points and concepts: Patience, Visual cues, Active listening, Respect, Timing',
+                'Wait patiently for your turn to speak',
+                'Use visual cues or objects to indicate speaking turns',
+                'Practice active listening while others are speaking',
+                'Show respect for others\' time to share',
+                'Learn to recognize appropriate moments to contribute'
+            ],
+            'Using Kind Words': [
+                'Key points and concepts: Politeness, Gratitude, Courtesy, Sincerity, Positive communication',
+                'Learn and use polite greetings and farewells',
+                'Practice gratitude and appreciation',
+                'Use "please" and "thank you" consistently',
+                'Learn to apologize sincerely',
+                'Choose words that build others up'
+            ],
+
+            'Expressing Feelings': [
+                'Key points and concepts: Emotional identification, Self-expression, Regulation, Empathy, Communication strategies',
+                'Identify and name different emotions',
+                'Use "I feel" statements appropriately',
+                'Learn healthy ways to express strong emotions',
+                'Recognize others\' emotional expressions',
+                'Practice emotional regulation strategies'
+            ],
+            'Listening Skills': [
+                'Key points and concepts: Focus, Nonverbal cues, Direction following, Questioning, Information retention',
+                'Focus attention on the speaker',
+                'Show understanding through non-verbal cues',
+                'Follow simple and complex directions',
+                'Ask relevant questions',
+                'Remember and recall key information'
+            ],
+            'Making Friends': [
+                'Key points and concepts: Social initiation, Turn-taking, Interest sharing, Kindness, Conflict resolution',
+                'Introduce yourself to new people',
+                'Share and take turns with others',
+                'Show interest in others\' activities',
+                'Use kind words and actions',
+                'Learn to resolve conflicts peacefully'
+            ],
+
+
+            'Stereotypes of Middle Schooler': [
+                'Key points and concepts: Social bonding, Peer dynamics, Attention span, Behavioral patterns, Development stages',
+                "My 7th graders when I tell them they can work with anyone they want: [excited]. Middle schoolers are socially eager and prefer working with peers. This excitement reflects their need for social bonding, making peer communication crucial for developing collaboration and self-expression.",
+                "When that one kid in the class speaks up and says, 'Come on guys, listen! She is trying to talk': [proud]. Middle schoolers can be self-centered and impulsive. The student's intervention shows empathy and active listening, highlighting emerging leadership and social responsibility in group dynamics.",
+                "3 seconds after I gave my middle schoolers directions [facepalm]. Middle schoolers struggle with focus and following directions. This shows the impact of attention span and information retention, emphasizing the need for clear communication and repetition in teaching."
+            ],
+            'The Interpersonal Communication Needs': [
+                'Key points and concepts: Cultural expression, Inclusion norms, Authority dynamics, Group behavior, Cultural sensitivity',
+                "Cultures differ in how affection is expressed. In some, physical or verbal displays are common, while in others, emotional restraint is preferred. Teachers need to be aware of these differences to avoid making students uncomfortable with well-intended gestures.",
+                "Cultural inclusion norms influence how students approach group dynamics. Some cultures value collective belonging, while others emphasize individualism. A teacher’s failure to recognize these differences can lead to unintended exclusion or misinterpretation of students’ behavior.",
+                "Control by authority and power dynamics vary. In hierarchical cultures, students may expect clear, authoritative guidance, whereas in more egalitarian cultures, they may seek collaboration. Misunderstanding these expectations can affect how students respond to discipline and instruction."
+            ],
+
+            'Roles in Interpersonal Communication': [
+                'Key points and concepts: Role navigation, Cultural identity, Authority relationships, Peer dynamics, Social development',
+                "Students may be navigating the roles of learner, friend, and family member, each with distinct expectations regarding communication. A student from a collectivist culture might place a higher value on the role of being a good group member or family representative, while one from an individualistic culture may focus more on personal achievement and self-expression.",
+                "Teachers also embody multiple roles, such as educator, authority figure, mentor, and sometimes, counselor. Teachers' cultural backgrounds and their understanding of students' cultures shape their expectations and teaching methods. Effective communication requires that teachers recognize and respect the diverse roles students may be assuming and adjust their strategies accordingly.",
+                "Peers serve a critical role in students' social development. Cultural differences in peer relationships—such as how friendship is defined, what is considered supportive behavior, and how conflict is managed—can significantly affect how students communicate within their peer groups."
+            ],
+
+            'Social Exchange Theory Between Teacher and Student': [
+                'Key points and concepts: Cultural rewards, Feedback perception, Trust building, Relationship dynamics, Motivation',
+                "Cultural differences play a significant role in shaping what students perceive as rewarding. For example, some students may value praise, grades, or recognition, while others may prefer personalized attention or a warm, supportive relationship. A teacher from a culture that emphasizes formal authority might favor public rewards like praise, but a student from a culture that values personal connection may find such rewards less meaningful. If there is a misalignment between the teacher’s approach and the student’s cultural expectations, the student may not perceive the interaction as beneficial, leading to disengagement or frustration.",
+                "Perception of Costs also varies across cultures. For instance, in hierarchical cultures, stern feedback or corrective comments may be viewed as constructive and necessary for growth. However, in egalitarian cultures, the same feedback may be seen as disrespectful or damaging to a student’s self-esteem. In these cases, the costs of the feedback (e.g., negative emotional response) can outweigh the benefits (e.g., improvement in skills).",
+                "The teacher-student relationship is directly shaped by how authority and feedback are culturally perceived. Teachers must adjust their communication styles to avoid damaging trust and to foster positive connections with students. By understanding the cultural norms around rewards and costs, teachers can better tailor their communication strategies to meet students' diverse needs, ultimately enhancing engagement and motivation in the classroom."
+            ],
+
+            'Effective Communicator': [
+                'Key points and concepts: Cultural awareness, Communication adaptation, Trust building, Conflict resolution, Inclusivity',
+                "Teachers who are culturally aware can adjust their communication style to meet the diverse needs of their students. This may involve varying their approach to discipline, adjusting the level of formality, or changing how they offer praise or feedback to ensure it resonates with students from different cultural backgrounds.",
+                "A teacher who is an effective communicator and understands the cultural nuances of their students can build trust, which is essential for encouraging student engagement and academic success. When students feel their cultural identity is respected, they are more likely to participate actively in class and form positive relationships with their peers and the teacher.",
+                "Cultural differences can sometimes lead to misunderstandings or conflicts in the classroom, requiring resolution. An effective communicator will recognize when cultural differences are at play and will work to mediate conflicts in ways that respect all parties' cultural perspectives."
+            ],
+
+            'The Dark Side of Emotions': [
+                'Key points and concepts: Emotional expression, Cultural differences, Anxiety management, Vulnerability, Behavioral interpretation',
+                "In some cultures, expressing anger or hurt openly is discouraged, while in others, it might be more acceptable. For a middle school student, cultural differences in the expression of anger can affect how conflicts are resolved. A student from a culture where open conflict is avoided might suppress feelings of anger or hurt, leading to internalized stress or passive-aggressive behavior. Conversely, a student from a culture that values direct confrontation might express anger more openly, potentially causing friction with peers or teachers who are not accustomed to this form of emotional expression.",
+                "Cultural differences in how fear or anxiety is managed can influence student behavior in the classroom. For example, in cultures where academic success is heavily valued, students may experience high levels of anxiety. A teacher unfamiliar with the cultural pressures a student faces may misinterpret anxiety as lack of effort or engagement, rather than a response to external stressors.",
+                "In some cultures, emotions like sadness or shame may be internalized, whereas others might be more open about expressing vulnerability. A teacher might misread a student's quiet demeanor as disinterest or lack of motivation when, in fact, the student may be feeling sadness or shame about their performance or social status."
+            ],
+
+
+            'Friendship Building': [
+                'Key points and concepts: Genuine interest, Trust, Empathy, Conflict management, Relationship maintenance',
+                'Show genuine interest in others: Ask questions about their hobbies and interests, remember important details they share, and follow up on previous conversations to show you care.',
+                'Be reliable and trustworthy: Keep promises, maintain confidentiality when friends share secrets, and be someone others can count on for support and encouragement.',
+                'Practice empathy and kindness: Understand and validate friends\' feelings, offer comfort during difficult times, and celebrate their successes without jealousy.',
+                'Learn to resolve conflicts respectfully: Address disagreements calmly, apologize sincerely when needed, and work together to find solutions that maintain the friendship.'
+            ],
+            'Group Work': [
+                'Key points and concepts: Leadership roles, Inclusive behavior, Active listening, Responsibility sharing, Team collaboration',
+                'Take turns being a leader and follower: Practice different roles in group activities, learn when to step up with ideas and when to support others\' suggestions, and understand that both leading and following are valuable skills.',
+                'Use "we" language and inclusive behavior: Make sure everyone feels welcome, invite quiet group members to share their thoughts, and celebrate team accomplishments rather than individual achievements.',
+                'Practice active listening and respectful disagreement: Give full attention when others are speaking, ask clarifying questions, and learn to disagree with ideas rather than attacking people.',
+                'Share responsibilities and help others succeed: Divide work fairly, offer help when needed, and understand that the group\'s success depends on everyone working together effectively.'
+            ],
+
+
+
+            'Public Speaking': [
+                'Key points and concepts: Confidence building, Thought organization, Listening skills, Audience adaptation, Communication clarity',
+                "Builds Confidence: Talking with friends and teachers helps students get used to sharing ideas, which makes speaking in front of a group feel less scary over time.', 'Be reliable and trustworthy: Keep promises, maintain confidentiality when friends share secrets, and be someone others can count on for support and encouragement.",
+                "Learn How to Organize Thoughts: When students explain things to others in everyday conversations, they practice organizing their thoughts clearly, which is helpful for public speaking.",
+                "Improves Listening Skills: By listening carefully in conversations, students learn to respond appropriately and stay focused, both of which are important in public speaking.",
+                "Gains Experience with Different Audiences: Interacting with friends, teachers, and family members helps students adapt their speaking style to fit different people, a key skill for any public speaker."
+            ],
+
+            'Professional Communication': [
+                'Key points and concepts: Respectful language, Clear expression, Empathy building, Active listening, Professional etiquette',
+                "Learns Respectful Language: Talking with teachers and classmates teaches students to use polite and respectful language, which is important in professional settings.",
+                "Practices Clear Explanations: When students explain their ideas or opinions in conversations, they practice speaking clearly, which is essential for communicating in a professional environment.",
+                "Builds Empathy: By understanding and responding to different perspectives in conversations, students learn to consider others\' feelings, which helps build positive relationships in professional settings.",
+                "Develop Active Listening: Through everyday conversations, students learn to listen carefully and respond thoughtfully, a skill that shows professionalism and respect in the workplace."
+            ],
+            'Leadership': [
+                'Key points and concepts: Motivation, Teamwork, Conflict resolution, Decision-making, Communication effectiveness',
+                "Learn to Motivate Others: By encouraging friends and classmates, students practice lifting others up, which is an important part of being a good leader.",
+                "Builds Teamwork Skills: Working together on group projects and activities teaches students how to communicate and cooperate, which is essential for effective leadership.",
+                "Develops Conflict Resolution: By handling disagreements with friends or classmates, students learn how to solve conflicts calmly, a key skill for leaders.",
+                "Practices Decision-Making: In conversations where students have to make choices or give advice, they practice making decisions, which helps build confidence in leading others."
+            ],
+                'Academic Discourse': [
+                    'Key points and concepts: Critical analysis, Scholarly debate, Research methodology, Academic writing, Peer review',
+                    'Master critical analysis and scholarly debate techniques',
+                    'Develop skills in research presentation and academic writing',
+                    'Learn to construct and defend academic arguments',
+                    'Practice peer review and constructive feedback',
+                    'Engage in intellectual discussions across disciplines'
+                ],
+                'Networking': [
+                    'Key points and concepts: Professional relationships, Personal branding, Social networking, Industry connections, Network maintenance',
+                    'Build and maintain professional relationships across industries',
+                    'Develop your personal brand and professional identity',
+                    'Master elevator pitches and professional introductions',
+                    'Utilize social media for professional networking',
+                    'Practice follow-up communication and relationship maintenance'
+                ],
+                'Career Communication': [
+                    'Key points and concepts: Professional etiquette, Workplace writing, Team dynamics, Leadership skills, Conflict management',
+                    'Perfect interview techniques and professional presentation',
+                    'Develop workplace writing skills for emails and reports',
+                    'Master team collaboration and group dynamics',
+                    'Learn leadership communication strategies',
+                    'Practice conflict resolution in professional settings'
+                ],
+                'Cross-Cultural Communication': [
+                    'Key points and concepts: Cultural sensitivity, Global awareness, Intercultural competence, Inclusive communication, Cultural adaptation',
+                    'Understand cultural sensitivity in global contexts',
+                    'Develop awareness of non-verbal communication across cultures',
+                    'Master intercultural negotiation techniques',
+                    'Practice inclusive language and communication styles',
+                    'Learn to navigate cultural differences in academic and professional settings'
+                ],
+                'Digital Communication': [
+                    'Key points and concepts: Virtual collaboration, Online etiquette, Digital tools, Remote teamwork, Digital professionalism',
+                    'Master virtual presentation and online meeting etiquette',
+                    'Develop effective remote collaboration strategies',
+                    'Learn digital tool management for team communication',
+                    'Practice asynchronous communication techniques',
+                    'Understand digital professionalism and online presence'
+                ],
+                'Conflict Resolution': [
+                    'Key points and concepts: Negotiation, Mediation, Diplomatic communication, Active listening, De-escalation',
+                    'Learn advanced negotiation techniques for academic and professional settings',
+                    'Develop mediation skills for group conflicts',
+                    'Master diplomatic communication in challenging situations',
+                    'Practice active listening during disputes',
+                    'Understand conflict de-escalation strategies'
+                ],
+            'Nonverbal Communication': [
+                'Key points and concepts: Body language, Cultural awareness, Eye contact, Facial expressions, Posture interpretation',
+                'Observe and interpret different forms of body language in the classroom setting',
+                'Understand how cultural backgrounds influence nonverbal communication styles',
+                'Recognize when lack of eye contact may indicate confusion versus cultural differences',
+                'Learn to read and respond appropriately to facial expressions and body posture',
+                'Practice positive nonverbal cues to show engagement and understanding'
+            ],
+
+            'Verbal Expression': [
+                'Key points and concepts: Respectful dialogue, Clear communication, Honesty, Constructive expression, Appropriate tone',
+                'Develop skills for expressing ideas and opinions clearly and respectfully',
+                'Practice appropriate ways to disagree or ask for clarification',
+                'Learn to communicate honestly about academic work and challenges',
+                'Understand the impact of tone and word choice in different situations',
+                'Build confidence in sharing thoughts and participating in discussions'
+            ],
+
+            'Listening and Perception': [
+                'Key points and concepts: Active listening, Understanding, Cultural differences, Misinterpretation, Reception skills',
+                'Practice focusing attention on speakers and maintaining engagement',
+                'Develop strategies for checking understanding and asking clarifying questions',
+                'Learn to recognize and address communication misunderstandings',
+                'Understand how personal experiences affect message interpretation',
+                'Build skills for empathetic and attentive listening'
+            ],
+
+            'Interpersonal Needs': [
+                'Key points and concepts: Inclusion, Control dynamics, Affection, Group belonging, Social boundaries',
+                'Understand the importance of feeling included and valued in groups',
+                'Learn to recognize and address exclusionary behaviors',
+                'Develop healthy approaches to leadership and group participation',
+                'Practice showing appropriate affection and maintaining boundaries',
+                'Build awareness of how personal actions affect others feelings'
+            ],
+
+            'Emotional Expression': [
+                'Key points and concepts: Emotion management, Self-regulation, Conflict resolution, Frustration handling, Expression techniques',
+                'Learn to identify and name different emotional states',
+                'Develop strategies for managing strong emotions appropriately',
+                'Practice positive ways to express frustration or disagreement',
+                'Understand the connection between emotions and communication',
+                'Build skills for resolving emotional conflicts constructively'
+            ],
+
+            'Positive Reinforcement': [
+                'Key points and concepts: Genuine praise, Constructive feedback, Sincerity, Communication impact, Relationship building',
+                'Learn to give and receive authentic compliments',
+                'Understand the difference between genuine and insincere praise',
+                'Practice offering constructive feedback to peers',
+                'Recognize the impact of words on others feelings and confidence',
+                'Develop skills for building positive relationships through communication'
+            ],
+            'Interpersonal Development': [
+                'Key points and concepts: Emotional intelligence, Social interaction, Problem-solving, Negotiation, Influence',
+                'Develop basic emotional intelligence through peer interactions',
+                'Practice working cooperatively with others in structured activities',
+                'Learn simple problem-solving strategies for common conflicts',
+                'Begin to understand basic negotiation and persuasion skills',
+                'Build confidence in making age-appropriate decisions'
+            ],
+            'Communication Environment': [
+                'Key points and concepts: Support, Structure, Visual aids, Inclusivity, Responsiveness',
+                'Create a supportive space for open communication and questions',
+                'Provide language-rich opportunities throughout daily activities',
+                'Use visual aids and cues to enhance understanding',
+                'Maintain consistent routines and clear expectations',
+                'Ensure each child has opportunities for peer interaction'
+            ],
+            'Positive Interactions': [
+                'Key points and concepts: Compliments, Kindness, Appreciation, Reinforcement, Sharing',
+                'Learn to give simple compliments to peers',
+                'Practice sharing positive observations',
+                'Develop basic friendship-building skills',
+                'Understanding the impact of kind words',
+                'Building confidence through positive reinforcement'
+            ],
+            'Cultural Awareness': [
+                'Key points and concepts: Diversity, Respect, Inclusion, Understanding, Acceptance',
+                'Recognize and respect different ways of communicating',
+                'Learn about diverse family and cultural practices',
+                'Practice inclusive behaviors in group settings',
+                'Develop appreciation for differences',
+                'Build multicultural awareness through activities'
+            ],
+            'Emotional Management': [
+                'Key points and concepts: Self-regulation, Coping strategies, Expression, Support, Growth',
+                'Learn appropriate ways to express difficult emotions',
+                'Develop basic coping strategies for challenging feelings',
+                'Practice asking for help when emotions are overwhelming',
+                'Understanding the difference between feelings and actions',
+                'Building emotional resilience through supported experiences'
+            ],
+            'Communication Barriers': [
+                'Key points and concepts: Obstacles, Cultural differences, Perceptual filters, Language barriers, Solutions',
+                'Identify common barriers to effective communication',
+                'Learn strategies for overcoming language and cultural differences',
+                'Understand how personal biases affect message interpretation',
+                'Develop techniques for clarifying misunderstandings',
+                'Practice adapting communication style to overcome barriers'
+            ],
+            'Effective Feedback': [
+                'Key points and concepts: Constructive criticism, Positive reinforcement, Growth mindset, Timing, Delivery',
+                'Learn principles of giving constructive feedback',
+                'Practice receiving and implementing feedback effectively',
+                'Understand the importance of timing and context',
+                'Develop skills in positive reinforcement',
+                'Master the balance between praise and criticism'
+            ],
+            'Presentation Skills': [
+                'Key points and concepts: Public speaking, Audience engagement, Delivery, Confidence, Structure',
+                'Develop confident public speaking abilities',
+                'Learn techniques for engaging different audiences',
+                'Master verbal and non-verbal presentation skills',
+                'Practice structured content delivery',
+                'Build skills in handling Q&A sessions'
+            ],
+
+                'Digital Leadership': [
+                    'Key points and concepts: Online presence, Digital citizenship, Virtual communication, Social media, Professional networking',
+                    'Understand how to maintain a professional online presence',
+                    'Learn to lead virtual teams and facilitate online discussions',
+                    'Develop strategies for effective digital communication',
+                    'Master the art of engaging virtual audiences',
+                    'Practice responsible social media management and digital citizenship'
+                ],
+
+                'Group Dynamics': [
+                    'Key points and concepts: Team roles, Collaboration, Facilitation, Project management, Inclusive leadership',
+                    'Learn to identify and utilize different team member strengths',
+                    'Develop skills in facilitating productive group discussions',
+                    'Master techniques for managing group projects effectively',
+                    'Practice inclusive leadership strategies',
+                    'Build understanding of group development stages and dynamics'
+                ],
+
+
+                'Cultural Competence': [
+                    'Key points and concepts: Global awareness, Diversity, Inclusion, Cross-cultural communication, Perspective-taking',
+                    'Understand different cultural communication styles',
+                    'Learn to bridge cultural differences effectively',
+                    'Develop skills in inclusive leadership practices',
+                    'Master techniques for cross-cultural collaboration',
+                    'Build awareness of global business and social norms'
+                ],
+
+                'Emotional Leadership': [
+                    'Key points and concepts: Emotional intelligence, Empathy, Support, Team morale, Positive environment',
+                    'Develop advanced emotional intelligence skills',
+                    'Learn to recognize and respond to group emotional dynamics',
+                    'Master techniques for building team morale',
+                    'Practice creating positive and supportive environments',
+                    'Build skills in empathetic leadership and support'
+                ]
+        };
+
+        return detailsMap[cardTitle] || [
+            'Content coming soon...',
+            'Check back for updates',
+            'Contact us for more information'
+        ];
+    }

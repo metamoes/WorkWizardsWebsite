@@ -815,23 +815,24 @@
 
         modalImage.src = card.querySelector('img').src;
         modalTitle.textContent = card.querySelector('h3').textContent;
-        modalDescription.textContent = card.querySelector('p').textContent;
+        // Change this line from textContent to innerHTML
+        modalDescription.innerHTML = card.querySelector('p').innerHTML;
 
         // Clear existing list items
         modalList.innerHTML = '';
 
-        // Add detailed content based on the card type
+        // Rest of the function remains the same
         const cardTitle = card.querySelector('h3').textContent;
         const details = getCardDetails(cardTitle);
 
         details.forEach(detail => {
             const li = document.createElement('li');
-            li.textContent = detail;
+            li.innerHTML = detail;
             modalList.appendChild(li);
         });
 
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
